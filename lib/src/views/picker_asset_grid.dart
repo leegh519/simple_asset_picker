@@ -134,7 +134,7 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
                 },
               );
             },
-          ).toList()
+          ),
         ],
       ),
     );

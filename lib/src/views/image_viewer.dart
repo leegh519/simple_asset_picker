@@ -6,6 +6,7 @@ import 'package:simple_asset_picker/src/provider/asset_path_provider.dart';
 import 'package:simple_asset_picker/src/provider/asset_provider.dart';
 import 'package:simple_asset_picker/src/views/picker.dart';
 import 'package:simple_asset_picker/src/views/video_viewer.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
 class ImageViewer extends ConsumerWidget {
   const ImageViewer({
@@ -134,7 +135,7 @@ class ImageViewer extends ConsumerWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
                               ),
-                              textScaleFactor: 1,
+                              textScaler: TextScaler.noScaling,
                             )
                           : Container(
                               decoration: const BoxDecoration(

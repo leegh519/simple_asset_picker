@@ -49,7 +49,7 @@ class ViewerAppbar extends ConsumerWidget {
               fontSize: 16,
               letterSpacing: -0.5,
             ),
-            textScaleFactor: 1,
+            textScaler: TextScaler.noScaling,
           ),
           const Spacer(),
           if (selectedAssets.isNotEmpty)

@@ -49,7 +49,7 @@ class PickerAppbar extends ConsumerWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                   ),
-                  textScaleFactor: 1,
+                  textScaler: TextScaler.noScaling,
                 ),
               if (selectedAssets.isNotEmpty && pickerConfig.maxAssets != null)
                 Text(
@@ -59,7 +59,7 @@ class PickerAppbar extends ConsumerWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                   ),
-                  textScaleFactor: 1,
+                  textScaler: TextScaler.noScaling,
                 ),
               if (selectedAssets.isNotEmpty)
                 InkWell(
@@ -80,7 +80,7 @@ class PickerAppbar extends ConsumerWidget {
                         fontWeight: FontWeight.w700,
                         letterSpacing: -0.5,
                       ),
-                      textScaleFactor: 1,
+                      textScaler: TextScaler.noScaling,
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class PickerAppbar extends ConsumerWidget {
 }
 
 class AlbumDropdown extends ConsumerStatefulWidget {
-  const AlbumDropdown({Key? key}) : super(key: key);
+  const AlbumDropdown({super.key});
 
   @override
   ConsumerState<AlbumDropdown> createState() => _AlbumDropdownState();
@@ -153,7 +153,7 @@ class _AlbumDropdownState extends ConsumerState<AlbumDropdown> {
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ),
-                        textScaleFactor: 1,
+                        textScaler: TextScaler.noScaling,
                       )
                     : Text.rich(
                         TextSpan(
@@ -171,7 +171,7 @@ class _AlbumDropdownState extends ConsumerState<AlbumDropdown> {
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ),
-                        textScaleFactor: 1,
+                        textScaler: TextScaler.noScaling,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -262,7 +262,7 @@ class _AlbumDropdownState extends ConsumerState<AlbumDropdown> {
                               ),
                             ],
                           ),
-                          textScaleFactor: 1,
+                          textScaler: TextScaler.noScaling,
                         ),
                       ),
                     );

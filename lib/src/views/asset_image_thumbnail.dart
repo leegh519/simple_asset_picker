@@ -5,6 +5,7 @@ import 'package:simple_asset_picker/src/provider/asset_provider.dart';
 import 'package:simple_asset_picker/src/util/util.dart';
 import 'package:simple_asset_picker/src/views/picker.dart';
 import 'package:simple_asset_picker/src/views/viewer_page.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
 class AssetImageThumbnail extends ConsumerWidget {
   final AssetEntity asset;
@@ -90,7 +91,7 @@ class AssetImageThumbnail extends ConsumerWidget {
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                             ),
-                            textScaleFactor: 1,
+                            textScaler: TextScaler.noScaling,
                           ),
                         ),
                       )
@@ -166,7 +167,7 @@ class AssetImageThumbnail extends ConsumerWidget {
                           fontSize: 14,
                           letterSpacing: -0.4,
                         ),
-                        textScaleFactor: 1,
+                        textScaler: TextScaler.noScaling,
                       ),
                     ),
                   ),
