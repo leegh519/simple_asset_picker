@@ -45,7 +45,7 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
     final paths = ref.watch(assetPathProvider);
 
     // 사진 로딩
-    if (paths == null) {
+    if (paths == null && hasPermission) {
       return const Center(
         child: Padding(
           padding: EdgeInsets.only(top: 50.0),
@@ -60,6 +60,16 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
         child: Padding(
           padding: EdgeInsets.only(top: 50.0),
           child: Text('갤러리 접근 권한이 없습니다.'),
+        ),
+      );
+    }
+
+    // 사진 로딩
+    if (paths == null) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: 50.0),
+          child: CircularProgressIndicator(),
         ),
       );
     }

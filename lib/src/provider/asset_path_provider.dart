@@ -15,7 +15,7 @@ final assetPathProvider =
 
 class AssetPathNotifier extends StateNotifier<List<AssetPath>?> {
   final Ref ref;
-  bool hasPermission = false;
+  bool hasPermission = true;
 
   AssetPathNotifier({
     required this.ref,
@@ -39,6 +39,7 @@ class AssetPathNotifier extends StateNotifier<List<AssetPath>?> {
   Future<void> getAlbumList() async {
     // 권한 없음
     if (!hasPermission) {
+      state = [];
       return;
     }
     final requestType = Picker.pickerConfig.requestType;
