@@ -1,3 +1,5 @@
+## 0.0.8
+* fix permission
 ## 0.0.7
 * Migrate to Flutter 3.16
 ## 0.0.6

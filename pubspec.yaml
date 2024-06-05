@@ -2,7 +2,7 @@ name: simple_asset_picker
 description: A Flutter image picker based on the KakaoTalk image picker UI.
 repository: https://github.com/leegh519/simple_asset_picker
 issue_tracker: https://github.com/leegh519/simple_asset_picker/issues
-version: 0.0.7
+version: 0.0.8
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  photo_manager: ^3.0.0-dev.1
+  photo_manager: ^3.1.1
   flutter_riverpod: ^2.3.7
   collection: ^1.17.1
   video_player: ^2.7.0
