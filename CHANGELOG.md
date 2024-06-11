@@ -1,3 +1,5 @@
+## 1.0.1
+* bug fix
 ## 1.0.0
 * Add camera capture
 ## 0.0.8

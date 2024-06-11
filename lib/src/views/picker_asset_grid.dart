@@ -160,12 +160,17 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
   }
 
   Future<void> takeMediaFromCamera(BuildContext context) async {
-    final result = await showDialog<CameraType?>(
-      context: context,
-      builder: (context) {
-        return const TakeMediaDialog();
-      },
-    );
+    CameraType result = CameraType.image;
+    if (Picker.pickerConfig.requestType == RequestType.common ||
+        Picker.pickerConfig.requestType == RequestType.all) {
+      result = await showDialog<CameraType?>(
+            context: context,
+            builder: (context) {
+              return const TakeMediaDialog();
+            },
+          ) ??
+          result;
+    }
     switch (result) {
       case CameraType.image:
         var image = await ImagePicker().pickImage(source: ImageSource.camera);

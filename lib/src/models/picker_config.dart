@@ -25,8 +25,7 @@ class PickerConfig {
   /// 테마 밝기
   final Brightness brightness;
 
-  /// 카메라 사용가능 여부,
-  /// 카메라 사용기능 아직 구현안됨
+  /// 카메라 사용가능 여부
   final bool useCamera;
 
   const PickerConfig({
