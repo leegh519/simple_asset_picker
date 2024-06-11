@@ -20,11 +20,11 @@ final selectedAssetProvider =
 class SelectedAssetNotifier extends StateNotifier<List<AssetEntity>> {
   SelectedAssetNotifier() : super([]) {
     if (Picker.pickerConfig.selectedAssets != null) {
-      state = Picker.pickerConfig.selectedAssets!;
+      state = [...Picker.pickerConfig.selectedAssets!];
     }
   }
 
-  bool selecteAsset(AssetEntity asset) {
+  bool selectAsset(AssetEntity asset) {
     final isSelected = state.contains(asset);
     if (isSelected) {
       state.remove(asset);

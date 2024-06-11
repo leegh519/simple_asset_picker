@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:simple_asset_picker/simple_asset_picker.dart';
 import 'package:simple_asset_picker/src/provider/asset_provider.dart';
 import 'package:simple_asset_picker/src/provider/asset_path_provider.dart';
 import 'package:simple_asset_picker/src/views/asset_image_thumbnail.dart';
-import 'package:simple_asset_picker/src/views/picker.dart';
+import 'package:simple_asset_picker/src/views/take_media_dialog.dart';
 
 class PickerAssetGrid extends ConsumerStatefulWidget {
   const PickerAssetGrid({
@@ -95,15 +99,20 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
         crossAxisCount: pickerConfig.gridCount,
         children: [
           if (Picker.pickerConfig.useCamera)
-            Padding(
-              padding: const EdgeInsets.all(1.5),
-              child: Container(
-                color: Colors.grey[400],
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                  size: imageSize / 3,
+            InkWell(
+              onTap: () {
+                takeMediaFromCamera(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(1.5),
+                child: Container(
+                  color: Colors.grey[400],
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: imageSize / 3,
+                  ),
                 ),
               ),
             ),
@@ -114,7 +123,7 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
                 onTap: () {
                   final isAdded = ref
                       .watch(selectedAssetProvider.notifier)
-                      .selecteAsset(asset);
+                      .selectAsset(asset);
                   if (!isAdded) {
                     ScaffoldMessenger.of(context)
                       ..removeCurrentSnackBar()
@@ -149,4 +158,49 @@ class _PickerAssetListState extends ConsumerState<PickerAssetGrid> {
       ),
     );
   }
+
+  Future<void> takeMediaFromCamera(BuildContext context) async {
+    final result = await showDialog<CameraType?>(
+      context: context,
+      builder: (context) {
+        return const TakeMediaDialog();
+      },
+    );
+    switch (result) {
+      case CameraType.image:
+        var image = await ImagePicker().pickImage(source: ImageSource.camera);
+        if (image != null) {
+          var asset = await PhotoManager.editor.saveImageWithPath(
+            image.path,
+            title: 'image_picker_${DateTime.now()}',
+          );
+          if (asset != null) {
+            Navigator.of(context).pop([asset]);
+            ref
+                .watch(selectedPathProvider.notifier)
+                .update((state) => state = null);
+          }
+        }
+        break;
+      case CameraType.video:
+        var video = await ImagePicker().pickVideo(source: ImageSource.camera);
+        if (video != null) {
+          var data = File(video.path);
+          var asset = await PhotoManager.editor.saveVideo(
+            data,
+            title: 'image_picker_${DateTime.now()}',
+          );
+          if (asset != null) {
+            Navigator.of(context).pop([asset]);
+            ref
+                .watch(selectedPathProvider.notifier)
+                .update((state) => state = null);
+          }
+        }
+        break;
+      default:
+    }
+  }
 }
+
+enum CameraType { image, video }

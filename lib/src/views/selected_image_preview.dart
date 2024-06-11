@@ -12,7 +12,7 @@ class SelectedImagePreview extends ConsumerWidget {
     final selectedAsset = ref.watch(selectedAssetProvider);
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
-      height: selectedAsset.isEmpty ? 0 : 80,
+      height: selectedAsset.isEmpty ? 0 : 70,
       padding: const EdgeInsets.symmetric(
         vertical: 5,
         horizontal: 15,
@@ -25,10 +25,10 @@ class SelectedImagePreview extends ConsumerWidget {
             onTap: () {
               ref
                   .read(selectedAssetProvider.notifier)
-                  .selecteAsset(selectedAsset[index]);
+                  .selectAsset(selectedAsset[index]);
             },
             child: SizedBox(
-              width: 80,
+              width: 60,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -37,7 +37,7 @@ class SelectedImagePreview extends ConsumerWidget {
                     child: AssetEntityImage(
                       selectedAsset[index],
                       isOriginal: false,
-                      thumbnailSize: const ThumbnailSize.square(80),
+                      thumbnailSize: const ThumbnailSize.square(60),
                       fit: BoxFit.cover,
                     ),
                   ),

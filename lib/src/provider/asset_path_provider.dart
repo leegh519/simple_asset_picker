@@ -28,12 +28,12 @@ class AssetPathNotifier extends StateNotifier<List<AssetPath>?> {
   Future<void> requestsPermission() async {
     // 권한 요청
     final permissionState = await PhotoManager.requestPermissionExtend();
+
     if (permissionState.hasAccess) {
       hasPermission = true;
     } else {
       hasPermission = false;
     }
-    // state = state.copyWith();
   }
 
   Future<void> getAlbumList() async {

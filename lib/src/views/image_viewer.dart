@@ -36,17 +36,17 @@ class ImageViewer extends ConsumerWidget {
     controller.addListener(() => listener(controller, ref));
 
     return Expanded(
-      child: PageView(
-        controller: controller,
-        onPageChanged: (value) {
-          ref.watch(previewAssetProvider.notifier).update(
-                (state) => state = list[value],
-              );
-        },
-        children: list.map((asset) {
-          return Stack(
-            children: [
-              Container(
+      child: Stack(
+        children: [
+          PageView(
+            controller: controller,
+            onPageChanged: (value) {
+              ref.watch(previewAssetProvider.notifier).update(
+                    (state) => state = list[value],
+                  );
+            },
+            children: list.map((asset) {
+              return Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.8,
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -73,83 +73,81 @@ class ImageViewer extends ConsumerWidget {
                         ),
                       )
                     : VideoViewer(asset: asset),
-              ),
-              // 선택 여부 표시
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: GestureDetector(
-                    onTap: () {
-                      final isAdded = ref
-                          .watch(selectedAssetProvider.notifier)
-                          .selecteAsset(asset);
-                      if (!isAdded) {
-                        ScaffoldMessenger.of(context)
-                          ..removeCurrentSnackBar()
-                          ..showSnackBar(
-                            const SnackBar(
-                              shape: StadiumBorder(),
-                              behavior: SnackBarBehavior.floating,
-                              duration: Duration(milliseconds: 1500),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 15,
-                                horizontal: 24,
-                              ),
-                              margin: EdgeInsets.only(
-                                left: 15,
-                                right: 15,
-                                bottom: 15,
-                              ),
-                              content: Text(
-                                '더 이상 선택할 수 없습니다.',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+              );
+            }).toList(),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: GestureDetector(
+                onTap: () {
+                  final isAdded = ref
+                      .watch(selectedAssetProvider.notifier)
+                      .selectAsset(previewAsset);
+                  if (!isAdded) {
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(
+                          shape: StadiumBorder(),
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(milliseconds: 1500),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 24,
+                          ),
+                          margin: EdgeInsets.only(
+                            left: 15,
+                            right: 15,
+                            bottom: 15,
+                          ),
+                          content: Text(
+                            '더 이상 선택할 수 없습니다.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
                             ),
-                          );
-                      }
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: isSelected
-                          ? BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: pickerConfig.mainColor,
-                            )
-                          : const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color.fromARGB(115, 155, 155, 155),
-                            ),
-                      alignment: Alignment.center,
-                      child: isSelected
-                          ? Text(
-                              count.toString(),
-                              style: TextStyle(
-                                color:
-                                    pickerConfig.brightness == Brightness.light
-                                        ? Colors.white
-                                        : Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textScaler: TextScaler.noScaling,
-                            )
-                          : Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color.fromARGB(185, 255, 255, 255),
-                              ),
-                            ),
-                    ),
-                  ),
+                          ),
+                        ),
+                      );
+                  }
+                },
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: isSelected
+                      ? BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: pickerConfig.mainColor,
+                        )
+                      : const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(115, 155, 155, 155),
+                        ),
+                  alignment: Alignment.center,
+                  child: isSelected
+                      ? Text(
+                          count.toString(),
+                          style: TextStyle(
+                            color: pickerConfig.brightness == Brightness.light
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textScaler: TextScaler.noScaling,
+                        )
+                      : Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color.fromARGB(185, 255, 255, 255),
+                          ),
+                        ),
                 ),
               ),
-            ],
-          );
-        }).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }

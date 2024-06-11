@@ -1,6 +1,6 @@
 # simple_asset_picker
 
-카카오톡의 UI를 참고하여 만든 플러터 이미지피커 패키지입니다. 안드로이드와 ios만 지원하고 있으며 [photo_manager](https://pub.dev/packages/photo_manager)와 [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), [video_player](https://pub.dev/packages/video_player) 패키지를 이용했습니다. 사진 및 영상 선택, 미리보기 기능을 지원하고 있습니다. 다음 버전에서 카메라로 사진을 찍은후 선택하는 기능을 추가할 예정입니다.
+카카오톡의 UI를 참고하여 만든 플러터 이미지피커 패키지입니다. 안드로이드와 ios만 지원하고 있으며 [photo_manager](https://pub.dev/packages/photo_manager)와 [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), [video_player](https://pub.dev/packages/video_player) 패키지를 이용했습니다. 사진 및 영상 선택, 사진 및 동영상 촬영, 미리보기 기능을 지원하고 있습니다. 
 
 ## 스크린샷
 |![grid](https://raw.githubusercontent.com/leegh519/0/main/asset_gird.png)|![preview](https://raw.githubusercontent.com/leegh519/0/main/asset_preview.png)|
@@ -21,11 +21,19 @@ android/app/src/main/AndroidManifest.xml 파일에 권한 추가
 <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29"/>
+<uses-permission
+    android:name="android.permission.READ_EXTERNAL_STORAGE"
+    android:maxSdkVersion="32"/>
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+<uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />  
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
+   
+Gradle 버전( gradle-wrapper.properties)을 7.5.1 이상 버전 사용.    
+Kotlin 버전( ext.kotlin_version) 을 1.7.22 이상 버전 사용.   
+AGP 버전( com.android.tools.build:gradle) 을 7.2.2 이상 버전 사용.   
 
 
 android/app/build.gradle에 minSdk 수정
@@ -42,16 +50,29 @@ defaultConfig {
 ios/Runner/Info.plist에 권한 설정 추가
 ```xml
 <key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+</dict>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>갤러리 접근 권한이 필요합니다.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>사진, 동영상 촬영을 위한 권한이 필요합니다.</string>
 <key>NSCameraUsageDescription</key>
 <string>카메라 접근 권한이 필요합니다.</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>영상 촬영을 위한 마이크 권한이 필요합니다.</string>
+<string>영상촬영을 위한 권한이 필요합니다.</string>
+<!-- localize -->
+<key>CFBundleDevelopmentRegion</key>
+<array>
+  <string>ko-KR</string>
+  <string>en-US</string>
+</array>
+<key>CFBundleLocalizations</key>
+<array>
+  <string>ko-KR</string>
+  <string>en-US</string>
+</array>
 ```
 
 ### 공통
@@ -106,7 +127,7 @@ final List<AssetEntity> list =
 ```
 
 #### 선택한 사진, 영상 표시
-[photo_manager](https://pub.dev/packages/photo_manager) 패키지를 이용했기 때문에 해당 패키지에서 제공하는 방법을 사용하면 됩니다.   
+[photo_manager](https://pub.dev/packages/photo_manager)에서 제공하는 방법 사용.  
 영상은 썸네일 이미지만 표시됩니다.
 ```dart
 AssetEntityImage(asset, isOriginal: false);
@@ -117,7 +138,7 @@ Image(image: AssetEntityImageProvider(asset, isOriginal: false));
 ```
 
 #### multipart/form-data 전송
-해당 내용도 [photo_manager](https://pub.dev/packages/photo_manager)에서 제공하는 방법을 그대로 적어둔 것입니다.   
+[photo_manager](https://pub.dev/packages/photo_manager)에서 제공하는 방법 사용.   
 http 사용   
 pseudo code :
 ```dart

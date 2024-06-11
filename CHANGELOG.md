@@ -1,3 +1,5 @@
+## 1.0.0
+* Add camera capture
 ## 0.0.8
 * fix permission
 ## 0.0.7

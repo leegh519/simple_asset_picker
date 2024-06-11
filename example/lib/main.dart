@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                   pageSize: 30,
                   requestType: RequestType.common,
                   selectedAssets: list,
-                  useCamera: false,
+                  useCamera: true,
                 ),
               );
               setState(() {});
@@ -88,7 +88,7 @@ class _HomeState extends State<Home> {
                                 list[index],
                                 isOriginal: false,
                                 thumbnailSize: const ThumbnailSize.square(80),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ],
